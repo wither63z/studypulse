@@ -47,3 +47,42 @@ No incluiré todavía: Backend, cuentas de usuario, sincronización en la nube, 
 
 ## Restricciones
 - Riesgo y plan: Programar notificaciones locales (permisos y tiempos) y calcular la semana para el resumen. Plan: leer la documentación oficial de Expo, probar primero una notificación de 10 segundos en un caso mínimo, integrarla al temporizador y guardar las fechas como texto ISO para el resumen.
+
+---
+
+## Cómo ejecutar
+
+```bash
+npm install
+npx expo start
+```
+
+- **Celular:** escanea el QR con Expo Go (Expo SDK 58).
+- **PC:** presiona `w` en la terminal o ejecuta `npm run web`.
+
+## Dónde cambiar cada cosa (una sola línea)
+
+| Quiero cambiar…                         | Archivo                 |
+| --------------------------------------- | ----------------------- |
+| Minutos de estudio / descanso           | `src/config.ts` → `POMODORO` |
+| Largo máximo del título, días límite    | `src/config.ts` → `TASKS` |
+| Lista de materias                       | `src/config.ts` → `SUBJECTS` |
+| Atajos de fecha de entrega              | `src/config.ts` → `DUE_SHORTCUTS` |
+| Nombre o icono de las pestañas          | `src/config.ts` → `TABS` (iconos: https://icons.expo.fyi) |
+| Colores (modo claro y oscuro)           | `src/theme/colors.js` |
+| Estilo de botones, tarjetas, campos     | `src/components/ui.tsx` |
+
+## Estructura
+
+```
+src/
+  app/            Pantallas (Expo Router): (tabs)/index = Tareas, (tabs)/pomodoro, (tabs)/summary = Resumen, new-task = Crear tarea
+  components/     Componentes reutilizables (ui.tsx, TaskItem.tsx, DueDatePicker.tsx, ProgressRing.tsx)
+  data/           Estado compartido de tareas y sesiones (guardado con AsyncStorage)
+  hooks/          useStoredState, usePomodoro
+  lib/            Fechas, almacenamiento, notificaciones y confirmaciones
+  theme/          Colores y tema claro/oscuro
+  config.ts       Ajustes generales
+```
+
+Estilos con NativeWind (clases de Tailwind como `bg-primary`, `text-muted`).
